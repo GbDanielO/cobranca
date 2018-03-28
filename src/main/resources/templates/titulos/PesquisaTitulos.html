@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="LayoutPadrao">
+
+<head>
+<title>Pesquisa de Titulos</title>
+</head>
+	<section layout:fragment="conteudo">
+	<div layout:include="Mensagem"></div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="clearfix">	
+				<h3 class="panel-title titulo-panel">Pesquisa de títulos</h3>
+				<a class="btn btn-link link-panel" th:href="@{/titulos/titulos/novo}">Novo Título</a>
+			</div>
+		</div>
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th class="text-center col-md-1">#</th>
+						<th class="col-md-4">Descrição</th>
+						<th class="text-center col-md-2">Data de vencimento</th>
+						<th class="text-center col-md-2">Valor</th>
+						<th class="Text-center col-md-2">Status</th>
+						<th class="text-center col-md-1">Opções</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="titulo : ${titulos}">
+						<td class="text-center" th:text="${titulo.codigo}"></td>
+						<td th:text="${titulo.descricao}"></td>
+						<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
+						<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
+						<td class="text-center" th:attr="data-role=${titulo.codigo}">
+							<span class="label" th:text="${titulo.status.descricao}"
+								th:classappend="${titulo.pendente ? 'label-danger' : 'label-success'}">
+							</span>
+						</td>
+						<td class="text-center">
+							<a class="btn btn-link btn-xs" th:href="@{/titulos/titulos/{codigo}(codigo=${titulo.codigo})}"
+								title="Editar" rel="tooltip" data-placement="top">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</a>
+							<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#modalExcluir" 
+								th:attr="data-codigo=${titulo.codigo},data-descricao=${titulo.descricao}"
+								title="Excluir" rel="tooltip" data-placement="top">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+							<a class="btn btn-link btn-xs js-atualizar-status" title="Receber" rel="tooltip" data-placement="top"
+								th:if="${titulo.pendente}" th:href="@{/titulos/titulos/{codigo}/receber(codigo=${titulo.codigo})}"
+								th:attr="data-codigo=${titulo.codigo}">
+								<span class="glyphicon glyphicon-check"></span>
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum título encontrado</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+	</div>
+	<div layout:include="modal/ModalExcluir"></div>
+	</section>
+</html>
