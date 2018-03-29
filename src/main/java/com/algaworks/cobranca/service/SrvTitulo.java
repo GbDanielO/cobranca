@@ -42,4 +42,9 @@ public class SrvTitulo {
         titulos.save( titulo );
         return titulo.getStatus();
     }
+
+    public List<Titulo> filtrar( String descricao ) {
+        List<Titulo> lstLtulos = titulos.findByDescricaoContainingIgnoreCase( descricao );
+        return lstLtulos;
+    }
 }

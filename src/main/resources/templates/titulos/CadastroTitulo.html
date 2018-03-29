@@ -56,7 +56,7 @@
 				<div class="form-group" th:classappend="${#fields.hasErrors('status')} ? has-error">
 					<label for="status" class="col-sm-3 control-label"></label>
 					<div class="col-sm-3">
-						<select class="form-control" name="status">
+						<select class="form-control" name="status" th:field="*{status}">
 							<option th:each="status : ${statusTitulos}" th:value="${status}" 
 								th:text="${status.descricao}"></option>		
 						</select>

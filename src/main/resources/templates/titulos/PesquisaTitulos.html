@@ -17,6 +17,19 @@
 			</div>
 		</div>
 		<div class="panel-body">
+			<form th:action="@{/titulos/titulos/}" method="GET" class="form-horizontal">
+				<div class="form-group col-sm-4">
+					<div class="input-group">
+				        <input type="text" class="form-control" placeholder="Pesquisar" name="descricao"/>
+				        <span class="input-group-btn">
+				        	<button type="submit" class="btn btn-default">
+				        		<i class="glyphicon glyphicon-search"></i>
+				        	</button>
+				        </span>
+				     </div>
+				</div>				
+			</form>
+		
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -77,8 +78,8 @@ public class TituloController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView buscarTodos() {
-        List<Titulo> todosTitulos = srvTitulo.buscarTodos();
+    public ModelAndView filtrar( @RequestParam(defaultValue = "%") String descricao ) {
+        List<Titulo> todosTitulos = srvTitulo.filtrar( descricao );
 
         final ModelAndView mv = new ModelAndView( "titulos/PesquisaTitulos" );
 
@@ -115,7 +116,7 @@ public class TituloController {
     @RequestMapping(value = "/{codigo}", method = RequestMethod.DELETE)
     public ModelAndView exluir( @PathVariable Long codigo, RedirectAttributes attributes ) {
         srvTitulo.excluir( codigo );
-        return buscarTodos().addObject( "mensagem", "Título excluído com sucesso!" );
+        return filtrar( "%" ).addObject( "mensagem", "Título excluído com sucesso!" );
     }
 
     @RequestMapping(value = "/{codigo}/receber", method = RequestMethod.PUT)
